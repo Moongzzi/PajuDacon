@@ -1,0 +1,105 @@
+/* 
+CSS Reset - 브라우저 간 일관된 렌더링을 위한 초기화 스타일
+*/
+
+/* 기본 리셋 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+/* HTML 요소 리셋 */
+html {
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fff;
+}
+
+/* 제목 요소 */
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+    font-weight: normal;
+    line-height: 1.2;
+}
+
+/* 목록 요소 */
+ul, ol, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* 링크 요소 */
+a {
+    text-decoration: none;
+    color: inherit;
+    background-color: transparent;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+/* 이미지 요소 */
+img {
+    max-width: 100%;
+    height: auto;
+    border: 0;
+    vertical-align: top;
+}
+
+/* 폼 요소 */
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    margin: 0;
+}
+
+button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+}
+
+/* 테이블 요소 */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* 기타 요소 */
+p {
+    margin: 0;
+}
+
+strong, b {
+    font-weight: bold;
+}
+
+em, i {
+    font-style: italic;
+}

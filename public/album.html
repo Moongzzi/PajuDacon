@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>추억앨범 - Me airy</title>
+    <link rel="stylesheet" href="../src/assets/styles/reset.css">
+    <link rel="stylesheet" href="../src/assets/styles/utilities.css">
+    <link rel="stylesheet" href="../src/assets/styles/components.css">
+    <link rel="stylesheet" href="../src/assets/styles/main.css">
+</head>
+<body>
+    <!-- 상단 헤더 메뉴 -->
+    <header class="header">
+        <div class="header-container">
+            <!-- 로고 -->
+            <a href="index.html" class="logo">
+                <span class="me">Me</span><span class="airy">airy</span>
+            </a>
+            
+            <!-- 네비게이션 메뉴 -->
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="courses.html">추천코스</a></li>
+                    <li><a href="album.html" class="active">추억앨범</a></li>
+                    <li><a href="storybook.html">스토리북</a></li>
+                </ul>
+            </nav>
+            
+            <!-- LOGIN 버튼 -->
+            <button class="login-btn" onclick="location.href='login.html'">LOGIN</button>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="main-content">
+        <section class="page-hero">
+            <div class="container">
+                <h1>추억앨범</h1>
+                <p>파주 출판단지에서의 소중한 추억을 공유해보세요</p>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <div class="container">
+                <div class="page-content">
+                    <h2>여행자들의 추억 갤러리</h2>
+                    <p>이 페이지는 현재 개발 중입니다. 곧 파주 출판단지를 방문한 여행자들의 소중한 추억들을 만나보실 수 있습니다.</p>
+                    
+                    <div class="album-preview">
+                        <div class="album-item">
+                            <h3>📸 사진 갤러리</h3>
+                            <p>방문객들이 촬영한 아름다운 파주 출판단지의 모습</p>
+                        </div>
+                        <div class="album-item">
+                            <h3>💌 방문 후기</h3>
+                            <p>파주 출판단지를 다녀간 분들의 생생한 후기와 감상</p>
+                        </div>
+                        <div class="album-item">
+                            <h3>🎯 스탬프 인증</h3>
+                            <p>스탬프 투어를 완주한 분들의 인증 사진과 이야기</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../src/assets/scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "PajuDacon",
+  "version": "1.0.0",
+  "description": "A modern web project using HTML, CSS, JavaScript, and TypeScript.",
+  "main": "src/assets/scripts/main.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "lite-server",
+    "test": "jest"
+  },
+  "dependencies": {
+    "lite-server": "^2.6.1",
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",
+    "ts-jest": "^27.0.6"
+  },
+  "author": "OK",
+  "license": "MIT"
+}

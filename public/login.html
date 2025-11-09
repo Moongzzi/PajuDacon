@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 - Me airy</title>
+    <link rel="stylesheet" href="../src/assets/styles/reset.css">
+    <link rel="stylesheet" href="../src/assets/styles/utilities.css">
+    <link rel="stylesheet" href="../src/assets/styles/components.css">
+    <link rel="stylesheet" href="../src/assets/styles/main.css">
+</head>
+<body>
+    <!-- 상단 헤더 메뉴 -->
+    <header class="header">
+        <div class="header-container">
+            <!-- 로고 -->
+            <a href="index.html" class="logo">
+                <span class="me">Me</span><span class="airy">airy</span>
+            </a>
+            
+            <!-- 네비게이션 메뉴 -->
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="courses.html">추천코스</a></li>
+                    <li><a href="album.html">추억앨범</a></li>
+                    <li><a href="storybook.html">스토리북</a></li>
+                </ul>
+            </nav>
+            
+            <!-- LOGIN 버튼 -->
+            <button class="login-btn active">LOGIN</button>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="main-content">
+        <section class="login-section">
+            <div class="container">
+                <div class="login-container">
+                    <h1>로그인</h1>
+                    <p>Me airy에 오신 것을 환영합니다</p>
+                    
+                    <form class="login-form" id="loginForm">
+                        <div class="form-group">
+                            <label for="email">이메일</label>
+                            <input type="email" id="email" name="email" placeholder="이메일을 입력하세요" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">비밀번호</label>
+                            <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+                        </div>
+                        
+                        <div class="form-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="remember">
+                                <span class="checkmark"></span>
+                                로그인 상태 유지
+                            </label>
+                            <a href="#" class="forgot-password">비밀번호 찾기</a>
+                        </div>
+                        
+                        <button type="submit" class="login-submit-btn">로그인</button>
+                    </form>
+                    
+                    <div class="login-footer">
+                        <p>아직 계정이 없으신가요? <a href="#" class="register-link">회원가입</a></p>
+                    </div>
+                    
+                    <div class="social-login">
+                        <p>또는</p>
+                        <div class="social-buttons">
+                            <button class="social-btn google">Google로 로그인</button>
+                            <button class="social-btn kakao">카카오로 로그인</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../src/assets/scripts/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스토리북 - Me airy</title>
+    <link rel="stylesheet" href="../src/assets/styles/reset.css">
+    <link rel="stylesheet" href="../src/assets/styles/utilities.css">
+    <link rel="stylesheet" href="../src/assets/styles/components.css">
+    <link rel="stylesheet" href="../src/assets/styles/main.css">
+</head>
+<body>
+    <!-- 상단 헤더 메뉴 -->
+    <header class="header">
+        <div class="header-container">
+            <!-- 로고 -->
+            <a href="index.html" class="logo">
+                <span class="me">Me</span><span class="airy">airy</span>
+            </a>
+            
+            <!-- 네비게이션 메뉴 -->
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="courses.html">추천코스</a></li>
+                    <li><a href="album.html">추억앨범</a></li>
+                    <li><a href="storybook.html" class="active">스토리북</a></li>
+                </ul>
+            </nav>
+            
+            <!-- LOGIN 버튼 -->
+            <button class="login-btn" onclick="location.href='login.html'">LOGIN</button>
+        </div>
+    </header>
+
+    <!-- 메인 콘텐츠 -->
+    <main class="main-content">
+        <section class="page-hero">
+            <div class="container">
+                <h1>스토리북</h1>
+                <p>파주 출판단지와 함께하는 이야기의 세계</p>
+            </div>
+        </section>
+        
+        <section class="content-section">
+            <div class="container">
+                <div class="page-content">
+                    <h2>출판단지 이야기</h2>
+                    <p>이 페이지는 현재 개발 중입니다. 곧 파주 출판단지와 관련된 다양한 이야기들을 만나보실 수 있습니다.</p>
+                    
+                    <div class="story-preview">
+                        <div class="story-item">
+                            <h3>📖 출판단지 역사</h3>
+                            <p>파주 출판단지가 어떻게 시작되고 발전해왔는지에 대한 이야기</p>
+                        </div>
+                        <div class="story-item">
+                            <h3>✍️ 작가 이야기</h3>
+                            <p>파주 출판단지와 인연을 맺은 작가들의 특별한 이야기</p>
+                        </div>
+                        <div class="story-item">
+                            <h3>📚 책과 함께</h3>
+                            <p>출판단지에서 만날 수 있는 특별한 책들과 그 뒷이야기</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="../src/assets/scripts/main.js"></script>
+</body>
+</html>
