@@ -1,0 +1,304 @@
+/* 공통 스타일 - 헤더, 푸터, 전역 요소 */
+
+/* 전역 스타일 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #FFFCEE;
+}
+
+/* 메인 콘텐츠 */
+.main-content {
+    margin-top: 7.5vh; /* 헤더 높이만큼 여백 */
+}
+
+/* 컨테이너 */
+.container {
+    max-width: 62.5vw;
+    margin: 0 auto;
+    padding: 0 1.04vw;
+}
+
+/* 헤더 컴포넌트 */
+.header {
+    background-color: #FFFFFF;
+    width: 100%;
+    height: 7.5vh;
+    box-shadow: 0 0.19vh 0.37vh rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+/* 스크롤 시 헤더 효과 */
+.header.scrolled {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
+}
+
+.header-container {
+    max-width: 62.5vw;
+    margin: 0 auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.04vw;
+}
+
+/* 로고 스타일 */
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    height: 3.75vh;
+}
+
+/* 로고 이미지 */
+.logo-image {
+    height: 3.75vh;
+    width: auto;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+}
+
+.logo:hover .logo-image {
+    opacity: 0.8;
+}
+
+/* 텍스트 로고 (백업용) */
+.logo .me {
+    color: #333;
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+}
+
+.logo .airy {
+    color: #666;
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: italic;
+    font-family: 'Georgia', serif;
+}
+
+/* 내비게이션 메뉴 */
+.nav-menu {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 2.08vw;
+}
+
+.nav-menu li {
+    position: relative;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #333;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0.9vh 0;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+.nav-menu a:hover {
+    color: #007bff;
+}
+
+/* 활성 메뉴 스타일 */
+.nav-menu a.active {
+    color: #007bff;
+}
+
+.nav-menu a.active::after,
+.nav-menu a:hover::after {
+    content: '';
+    position: absolute;
+    bottom: -0.47vh;
+    left: 0;
+    width: 100%;
+    height: 0.19vh;
+    background-color: #007bff;
+    transform: scaleX(1);
+    transition: transform 0.3s ease;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -0.47vh;
+    left: 0;
+    width: 100%;
+    height: 0.19vh;
+    background-color: #007bff;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+/* LOGIN 버튼 */
+.login-btn {
+    background-color: transparent;
+    border: none;
+    color: #333;
+    padding: 0.75vh 1.04vw;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.login-btn:hover {
+    color: #007bff;
+}
+
+.login-btn:focus {
+    outline: none;
+}
+
+/* 페이지 히어로 섹션 (공통) */
+.page-hero {
+    background-color: #f8f9fa;
+    padding: 11.25vh 0 5.62vh;
+    text-align: center;
+}
+
+.page-hero h1 {
+    font-size: 2.625rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1.4vh;
+}
+
+.page-hero p {
+    font-size: 1.125rem;
+    color: #666;
+}
+
+/* 콘텐츠 섹션 (공통) */
+.content-section {
+    padding: 5.62vh 0;
+}
+
+.page-content h2 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.87vh;
+    color: #333;
+}
+
+.page-content p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #666;
+    margin-bottom: 3.75vh;
+}
+
+/* 반응형 대응 - 태블릿 */
+@media (max-width: 992px) {
+    .nav-menu {
+        gap: 2vw;
+    }
+    
+    .nav-menu a {
+        font-size: 0.95rem;
+    }
+    
+    .login-btn {
+        font-size: 0.95rem;
+    }
+}
+
+/* 반응형 대응 - 모바일 */
+@media (max-width: 768px) {
+    .header-container {
+        padding: 0 1.95vw;
+    }
+    
+    .nav-menu {
+        gap: 2.6vw;
+    }
+    
+    .nav-menu a {
+        font-size: 0.875rem;
+    }
+    
+    .login-btn {
+        font-size: 0.875rem;
+    }
+    
+    .logo {
+        height: 3.28vh;
+    }
+    
+    .logo-image {
+        height: 3.28vh;
+    }
+    
+    .logo .me,
+    .logo .airy {
+        font-size: 1.75rem;
+    }
+    
+    .container {
+        padding: 0 1.95vw;
+    }
+    
+    .page-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .page-hero p {
+        font-size: 1rem;
+    }
+    
+    .page-content h2 {
+        font-size: 1.625rem;
+    }
+}
+
+/* 추가 반응형 대응 - 더 작은 화면 */
+@media (max-width: 480px) {
+    .nav-menu {
+        gap: 1.5vw;
+    }
+    
+    .nav-menu a {
+        font-size: 0.75rem;
+    }
+    
+    .login-btn {
+        font-size: 0.75rem;
+        padding: 0.5vh 0.8vw;
+    }
+    
+    .logo {
+        height: 2.8vh;
+    }
+    
+    .logo-image {
+        height: 2.8vh;
+    }
+    
+    .logo .me,
+    .logo .airy {
+        font-size: 1.5rem;
+    }
+}

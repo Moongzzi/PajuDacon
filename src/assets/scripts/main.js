@@ -170,9 +170,9 @@ function setupContentSelector() {
         // 나머지 카드들 위치 설정
         otherCards.forEach(function(card, index) {
             card.style.zIndex = String(3 - index);
-            var offsetX = -80 * (index + 1);
-            var offsetY = 20 * (index + 1);
-            card.style.transform = 'translateX(' + offsetX + 'px) translateY(' + offsetY + 'px)';
+            var offsetX = -4.17 * (index + 1); // -80px을 vw로 변환
+            var offsetY = 1.87 * (index + 1); // 20px을 vh로 변환
+            card.style.transform = 'translateX(' + offsetX + 'vw) translateY(' + offsetY + 'vh)';
         });
     }
     
@@ -206,8 +206,8 @@ function setupContentSelector() {
         card.addEventListener('mouseenter', function() {
             if (!card.classList.contains('active')) {
                 var currentTransform = card.style.transform;
-                // 현재 transform에서 Y값만 -10px로 조정
-                var newTransform = currentTransform.replace(/translateY\([^)]*\)/, 'translateY(-10px)');
+                // 현재 transform에서 Y값만 -0.94vh로 조정 (-10px을 vh로 변환)
+                var newTransform = currentTransform.replace(/translateY\([^)]*\)/, 'translateY(-0.94vh)');
                 card.style.transform = newTransform;
             }
         });

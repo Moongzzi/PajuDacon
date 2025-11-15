@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>추억앨범 - Me airy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../src/assets/styles/reset.css">
+    <link rel="stylesheet" href="../src/assets/styles/common.css">
     <link rel="stylesheet" href="../src/assets/styles/utilities.css">
-    <link rel="stylesheet" href="../src/assets/styles/components.css">
-    <link rel="stylesheet" href="../src/assets/styles/main.css">
+    <link rel="stylesheet" href="../src/assets/styles/album.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- 상단 헤더 메뉴 -->
@@ -15,7 +20,7 @@
         <div class="header-container">
             <!-- 로고 -->
             <a href="index.html" class="logo">
-                <span class="me">Me</span><span class="airy">airy</span>
+                <img src="../src/assets/images/Logo.png" alt="Me airy" class="logo-image">
             </a>
             
             <!-- 네비게이션 메뉴 -->
@@ -37,36 +42,522 @@
     <main class="main-content">
         <section class="page-hero">
             <div class="container">
-                <h1>추억앨범</h1>
-                <p>파주 출판단지에서의 소중한 추억을 공유해보세요</p>
-            </div>
-        </section>
-        
-        <section class="content-section">
-            <div class="container">
-                <div class="page-content">
-                    <h2>여행자들의 추억 갤러리</h2>
-                    <p>이 페이지는 현재 개발 중입니다. 곧 파주 출판단지를 방문한 여행자들의 소중한 추억들을 만나보실 수 있습니다.</p>
-                    
-                    <div class="album-preview">
-                        <div class="album-item">
-                            <h3>📸 사진 갤러리</h3>
-                            <p>방문객들이 촬영한 아름다운 파주 출판단지의 모습</p>
+                <!-- Album Grid -->
+                <div class="album-grid">
+                    <!-- Book Cover Upload Card -->
+                    <div class="book-cover-card upload-card" id="createAlbumBtn">
+                        <div class="upload-icon">
+                            <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                                <circle cx="40" cy="40" r="40" fill="#E0E0E0"/>
+                                <path d="M40 25V55M25 40H55" stroke="white" stroke-width="4" stroke-linecap="round"/>
+                            </svg>
                         </div>
-                        <div class="album-item">
-                            <h3>💌 방문 후기</h3>
-                            <p>파주 출판단지를 다녀간 분들의 생생한 후기와 감상</p>
-                        </div>
-                        <div class="album-item">
-                            <h3>🎯 스탬프 인증</h3>
-                            <p>스탬프 투어를 완주한 분들의 인증 사진과 이야기</p>
-                        </div>
+                        <p class="upload-text">앨범 생성하기</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- Album Editor Modal -->
+    <div id="albumEditorModal" class="album-modal">
+        <div class="album-modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button class="back-btn" id="backBtn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>뒤로가기</span>
+                </button>
+                <div class="header-center">
+                    <input type="text" class="modal-title-input" id="albumTitle" value="앨범 만들기" placeholder="앨범 제목을 입력하세요">
+                </div>
+                <div class="header-right">
+                    <button class="history-btn" id="undoBtn" title="실행 취소 (Ctrl+Z)">
+                        <i class="fas fa-undo"></i>
+                    </button>
+                    <button class="history-btn" id="redoBtn" title="다시 실행 (Ctrl+Y)">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                    <button class="save-btn" id="saveBtn">
+                        <i class="fas fa-save"></i>
+                        <span>저장</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Editor Area -->
+            <div class="editor-container">
+                <!-- Left Sidebar - Elements Panel -->
+                <aside class="left-sidebar">
+                    <div class="sidebar-header">
+                        <h3>요소 추가</h3>
+                    </div>
+                    <div class="sidebar-content">
+                        <div class="element-category">
+                            <button class="element-btn" data-type="image">
+                                <i class="fas fa-image"></i>
+                                <span>이미지</span>
+                            </button>
+                            <button class="element-btn" data-type="text">
+                                <i class="fas fa-font"></i>
+                                <span>텍스트</span>
+                            </button>
+                            <button class="element-btn" data-type="sticker">
+                                <i class="fas fa-icons"></i>
+                                <span>스티커</span>
+                            </button>
+                            <button class="element-btn" id="shapesToggleBtn">
+                                <i class="fas fa-shapes"></i>
+                                <span>도형</span>
+                            </button>
+                            <button class="element-btn" id="drawingModeBtn">
+                                <i class="fas fa-pen"></i>
+                                <span>그리기</span>
+                            </button>
+                        </div>
+                        
+                        <!-- 도형 선택 패널 (접기/펼치기) -->
+                        <div class="shapes-panel" id="shapesPanel" style="display: none;">
+                            <div class="panel-header-small">
+                                <button class="back-to-elements" id="backFromShapes">
+                                    <i class="fas fa-arrow-left"></i>
+                                </button>
+                                <h4>도형 선택</h4>
+                            </div>
+                            <div class="shape-grid">
+                                <button class="shape-btn" data-shape="rectangle">
+                                    <i class="fas fa-square"></i>
+                                    <span>사각형</span>
+                                </button>
+                                <button class="shape-btn" data-shape="circle">
+                                    <i class="fas fa-circle"></i>
+                                    <span>원</span>
+                                </button>
+                                <button class="shape-btn" data-shape="triangle">
+                                    <i class="fas fa-play" style="transform: rotate(-90deg);"></i>
+                                    <span>삼각형</span>
+                                </button>
+                                <button class="shape-btn" data-shape="star">
+                                    <i class="fas fa-star"></i>
+                                    <span>별</span>
+                                </button>
+                                <button class="shape-btn" data-shape="heart">
+                                    <i class="fas fa-heart"></i>
+                                    <span>하트</span>
+                                </button>
+                                <button class="shape-btn" data-shape="line">
+                                    <i class="fas fa-minus"></i>
+                                    <span>선</span>
+                                </button>
+                                <button class="shape-btn" data-shape="arrow">
+                                    <i class="fas fa-arrow-right"></i>
+                                    <span>화살표</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Sticker Panel (hidden by default) -->
+                        <div class="sticker-panel" id="stickerPanel" style="display: none;">
+                            <div class="sticker-header">
+                                <button class="back-to-elements" id="backToElements">
+                                    <i class="fas fa-arrow-left"></i>
+                                    <span>뒤로</span>
+                                </button>
+                                <h4>스티커 선택</h4>
+                            </div>
+                            <div class="sticker-grid">
+                                <!-- Emoji Icons -->
+                                <div class="sticker-item" data-icon="😊">😊</div>
+                                <div class="sticker-item" data-icon="❤️">❤️</div>
+                                <div class="sticker-item" data-icon="⭐">⭐</div>
+                                <div class="sticker-item" data-icon="🎉">🎉</div>
+                                <div class="sticker-item" data-icon="📷">📷</div>
+                                <div class="sticker-item" data-icon="📚">📚</div>
+                                <div class="sticker-item" data-icon="✨">✨</div>
+                                <div class="sticker-item" data-icon="🌟">🌟</div>
+                                <div class="sticker-item" data-icon="💖">💖</div>
+                                <div class="sticker-item" data-icon="🎈">🎈</div>
+                                <div class="sticker-item" data-icon="🌈">🌈</div>
+                                <div class="sticker-item" data-icon="🎨">🎨</div>
+                                <!-- Font Awesome Icons -->
+                                <div class="sticker-item" data-icon="heart">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="sticker-item" data-icon="star">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="sticker-item" data-icon="bookmark">
+                                    <i class="fas fa-bookmark"></i>
+                                </div>
+                                <div class="sticker-item" data-icon="camera">
+                                    <i class="fas fa-camera"></i>
+                                </div>
+                                <div class="sticker-item" data-icon="book">
+                                    <i class="fas fa-book"></i>
+                                </div>
+                                <div class="sticker-item" data-icon="leaf">
+                                    <i class="fas fa-leaf"></i>
+                                </div>
+                                <div class="sticker-item" data-icon="sun">
+                                    <i class="fas fa-sun"></i>
+                                </div>
+                                <div class="sticker-item" data-icon="moon">
+                                    <i class="fas fa-moon"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Center Canvas Area -->
+                <div class="canvas-area">
+                    <div class="canvas-wrapper">
+                        <canvas id="albumCanvas"></canvas>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar - Advanced Tools -->
+                <aside class="right-sidebar">
+                    <div class="sidebar-tabs">
+                        <button class="tab-btn active" data-tab="layers">
+                            <i class="fas fa-layer-group"></i>
+                            <span>레이어</span>
+                        </button>
+                        <button class="tab-btn" data-tab="effects">
+                            <i class="fas fa-magic"></i>
+                            <span>효과</span>
+                        </button>
+                        <button class="tab-btn" data-tab="align">
+                            <i class="fas fa-align-center"></i>
+                            <span>정렬</span>
+                        </button>
+                        <button class="tab-btn" data-tab="tools">
+                            <i class="fas fa-tools"></i>
+                            <span>도구</span>
+                        </button>
+                    </div>
+                    
+                    <div class="tab-content">
+                        <!-- Layers Tab -->
+                        <div class="tab-panel active" id="layersTab">
+                            <div class="panel-header">
+                                <h3>레이어</h3>
+                                <div class="layer-order-controls">
+                                    <button class="layer-order-btn" id="bringToFrontBtn" title="맨 앞으로">
+                                        <i class="fas fa-angle-double-up"></i>
+                                    </button>
+                                    <button class="layer-order-btn" id="bringForwardBtn" title="앞으로">
+                                        <i class="fas fa-angle-up"></i>
+                                    </button>
+                                    <button class="layer-order-btn" id="sendBackwardsBtn" title="뒤로">
+                                        <i class="fas fa-angle-down"></i>
+                                    </button>
+                                    <button class="layer-order-btn" id="sendToBackBtn" title="맨 뒤로">
+                                        <i class="fas fa-angle-double-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="layers-list" id="layersList">
+                                <p class="empty-state">객체가 없습니다</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Effects Tab -->
+                        <div class="tab-panel" id="effectsTab">
+                            <div class="panel-header">
+                                <h3>이미지 효과</h3>
+                            </div>
+                            <div class="effects-content">
+                                <!-- 필터 섹션 -->
+                                <div class="effect-section">
+                                    <div class="effect-section-title">이미지 필터</div>
+                                    <div class="filter-grid">
+                                        <button class="filter-btn" data-filter="grayscale">
+                                            <i class="fas fa-adjust"></i>
+                                            <span>흑백</span>
+                                        </button>
+                                        <button class="filter-btn" data-filter="sepia">
+                                            <i class="fas fa-image"></i>
+                                            <span>세피아</span>
+                                        </button>
+                                        <button class="filter-btn" data-filter="blur">
+                                            <i class="fas fa-eye-slash"></i>
+                                            <span>블러</span>
+                                        </button>
+                                        <button class="filter-btn" data-filter="brightness">
+                                            <i class="fas fa-sun"></i>
+                                            <span>밝게</span>
+                                        </button>
+                                        <button class="filter-btn" data-filter="contrast">
+                                            <i class="fas fa-adjust"></i>
+                                            <span>대비</span>
+                                        </button>
+                                        <button class="filter-btn" data-filter="vintage">
+                                            <i class="fas fa-camera-retro"></i>
+                                            <span>빈티지</span>
+                                        </button>
+                                        <button class="filter-btn" data-filter="remove">
+                                            <i class="fas fa-times"></i>
+                                            <span>제거</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- 회전/반전 섹션 -->
+                                <div class="effect-section">
+                                    <div class="effect-section-title">회전 & 반전</div>
+                                    <div class="transform-grid">
+                                        <button class="transform-btn" id="flipHBtn">
+                                            <i class="fas fa-arrows-alt-h"></i>
+                                            <span>좌우 반전</span>
+                                        </button>
+                                        <button class="transform-btn" id="flipVBtn">
+                                            <i class="fas fa-arrows-alt-v"></i>
+                                            <span>상하 반전</span>
+                                        </button>
+                                        <button class="transform-btn" id="rotate90Btn">
+                                            <i class="fas fa-redo"></i>
+                                            <span>90° 회전</span>
+                                        </button>
+                                        <button class="transform-btn" id="rotateCWBtn">
+                                            <i class="fas fa-redo-alt"></i>
+                                            <span>시계방향</span>
+                                        </button>
+                                        <button class="transform-btn" id="rotateCCWBtn">
+                                            <i class="fas fa-undo-alt"></i>
+                                            <span>반시계</span>
+                                        </button>
+                                        <button class="transform-btn" id="resetRotBtn">
+                                            <i class="fas fa-sync"></i>
+                                            <span>초기화</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- 크롭 섹션 -->
+                                <div class="effect-section">
+                                    <div class="effect-section-title">크롭</div>
+                                    <div class="crop-controls">
+                                        <button class="crop-btn" id="cropBtn">
+                                            <i class="fas fa-crop"></i>
+                                            <span>크롭 적용</span>
+                                        </button>
+                                        <button class="crop-btn" id="removeCropBtn">
+                                            <i class="fas fa-expand"></i>
+                                            <span>크롭 해제</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Align Tab -->
+                        <div class="tab-panel" id="alignTab">
+                            <div class="panel-header">
+                                <h3>정렬 및 배치</h3>
+                            </div>
+                            <div class="align-content">
+                                <div class="align-section">
+                                    <h4 class="align-section-title">정렬</h4>
+                                    <div class="align-buttons">
+                                        <button class="align-btn" id="alignLeft" title="왼쪽 정렬">
+                                            <i class="fas fa-align-left"></i>
+                                            <span>왼쪽</span>
+                                        </button>
+                                        <button class="align-btn" id="alignCenter" title="가로 중앙">
+                                            <i class="fas fa-align-center"></i>
+                                            <span>중앙</span>
+                                        </button>
+                                        <button class="align-btn" id="alignRight" title="오른쪽 정렬">
+                                            <i class="fas fa-align-right"></i>
+                                            <span>오른쪽</span>
+                                        </button>
+                                        <button class="align-btn" id="alignTop" title="위쪽 정렬">
+                                            <i class="fas fa-arrow-up"></i>
+                                            <span>위</span>
+                                        </button>
+                                        <button class="align-btn" id="alignMiddle" title="세로 중앙">
+                                            <i class="fas fa-arrows-alt-v"></i>
+                                            <span>중간</span>
+                                        </button>
+                                        <button class="align-btn" id="alignBottom" title="아래쪽 정렬">
+                                            <i class="fas fa-arrow-down"></i>
+                                            <span>아래</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="align-section">
+                                    <h4 class="align-section-title">분배</h4>
+                                    <div class="align-buttons">
+                                        <button class="align-btn" id="distributeHorizontal" title="가로 균등 분배">
+                                            <i class="fas fa-arrows-alt-h"></i>
+                                            <span>가로 분배</span>
+                                        </button>
+                                        <button class="align-btn" id="distributeVertical" title="세로 균등 분배">
+                                            <i class="fas fa-arrows-alt-v"></i>
+                                            <span>세로 분배</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tools Tab (Drawing & Background) -->
+                        <div class="tab-panel" id="toolsTab">
+                            <div class="panel-header">
+                                <h3>도구</h3>
+                            </div>
+                            <div class="tools-content">
+                                <!-- 그리기 도구 -->
+                                <div class="tool-section">
+                                    <div class="tool-section-title">그리기 도구</div>
+                                    <div class="drawing-controls">
+                                        <div class="control-group">
+                                            <label class="control-label">브러시 색상</label>
+                                            <input type="color" id="brushColor" class="color-input" value="#000000">
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">브러시 굵기</label>
+                                            <input type="range" id="brushWidth" class="range-input" min="1" max="50" value="5">
+                                            <span class="control-value" id="brushWidthValue">5px</span>
+                                        </div>
+                                        <div class="drawing-buttons">
+                                            <button class="tool-btn" id="penModeBtn">
+                                                <i class="fas fa-pen"></i>
+                                                <span>펜</span>
+                                            </button>
+                                            <button class="tool-btn" id="eraserModeBtn">
+                                                <i class="fas fa-eraser"></i>
+                                                <span>지우개</span>
+                                            </button>
+                                            <button class="tool-btn danger" id="clearDrawingsBtn">
+                                                <i class="fas fa-trash"></i>
+                                                <span>모두 지우기</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 배경 설정 -->
+                                <div class="tool-section">
+                                    <div class="tool-section-title">배경 설정</div>
+                                    <div class="background-controls">
+                                        <div class="control-group">
+                                            <label class="control-label">배경색</label>
+                                            <input type="color" id="bgColor" class="color-input" value="#FFFFFF">
+                                        </div>
+                                        <div class="bg-presets">
+                                            <button class="bg-preset-btn" data-color="#FFFFFF" style="background: #FFFFFF;"></button>
+                                            <button class="bg-preset-btn" data-color="#F0F0F0" style="background: #F0F0F0;"></button>
+                                            <button class="bg-preset-btn" data-color="#FFE5E5" style="background: #FFE5E5;"></button>
+                                            <button class="bg-preset-btn" data-color="#E5F3FF" style="background: #E5F3FF;"></button>
+                                            <button class="bg-preset-btn" data-color="#FFF9E5" style="background: #FFF9E5;"></button>
+                                            <button class="bg-preset-btn" data-color="#E5FFE5" style="background: #E5FFE5;"></button>
+                                        </div>
+                                        <div class="tool-section-title" style="margin-top: 16px;">그라디언트</div>
+                                        <div class="gradient-buttons">
+                                            <button class="gradient-btn" data-type="linear">
+                                                <div class="gradient-preview linear"></div>
+                                                <span>선형</span>
+                                            </button>
+                                            <button class="gradient-btn" data-type="radial">
+                                                <div class="gradient-preview radial"></div>
+                                                <span>방사형</span>
+                                            </button>
+                                        </div>
+                                        <div class="tool-section-title" style="margin-top: 16px;">패턴</div>
+                                        <div class="pattern-buttons">
+                                            <button class="pattern-btn" data-pattern="dots">점</button>
+                                            <button class="pattern-btn" data-pattern="stripes">줄무늬</button>
+                                            <button class="pattern-btn" data-pattern="grid">격자</button>
+                                            <button class="pattern-btn" data-pattern="diagonal">대각선</button>
+                                        </div>
+                                        <button class="tool-btn full-width" id="resetBgBtn">
+                                            <i class="fas fa-undo"></i>
+                                            <span>배경 초기화</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- 고급 기능 -->
+                                <div class="tool-section">
+                                    <div class="tool-section-title">고급 기능</div>
+                                    <div class="advanced-controls">
+                                        <div class="tool-section-title" style="margin-top: 8px; font-size: 11px;">클리핑 마스크</div>
+                                        <div class="mask-buttons">
+                                            <button class="mask-btn" data-mask="circle">
+                                                <i class="fas fa-circle"></i>
+                                                <span>원형</span>
+                                            </button>
+                                            <button class="mask-btn" data-mask="heart">
+                                                <i class="fas fa-heart"></i>
+                                                <span>하트</span>
+                                            </button>
+                                            <button class="mask-btn" data-mask="star">
+                                                <i class="fas fa-star"></i>
+                                                <span>별</span>
+                                            </button>
+                                            <button class="mask-btn" data-mask="remove">
+                                                <i class="fas fa-times"></i>
+                                                <span>제거</span>
+                                            </button>
+                                        </div>
+                                        <div class="tool-section-title" style="margin-top: 12px; font-size: 11px;">템플릿</div>
+                                        <div class="template-buttons">
+                                            <button class="template-btn" data-template="blank">빈 페이지</button>
+                                            <button class="template-btn" data-template="twoColumn">2단</button>
+                                            <button class="template-btn" data-template="grid">그리드</button>
+                                        </div>
+                                        <div class="tool-section-title" style="margin-top: 12px; font-size: 11px;">페이지</div>
+                                        <div class="page-controls">
+                                            <button class="tool-btn" id="addPageBtn">
+                                                <i class="fas fa-plus"></i>
+                                                <span>페이지 추가</span>
+                                            </button>
+                                            <div class="page-nav" id="pageNav">
+                                                <button class="page-nav-btn" id="prevPageBtn">
+                                                    <i class="fas fa-chevron-left"></i>
+                                                </button>
+                                                <span class="page-indicator" id="pageIndicator">1 / 1</span>
+                                                <button class="page-nav-btn" id="nextPageBtn">
+                                                    <i class="fas fa-chevron-right"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+
+            <!-- Bottom Control Panel -->
+            <div class="bottom-panel">
+                <div class="control-section" id="controlPanel">
+                    <p class="no-selection">객체를 선택하면 옵션이 표시됩니다</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fabric.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
     <script src="../src/assets/scripts/main.js"></script>
+    <script src="../src/assets/scripts/album-layers.js"></script>
+    <script src="../src/assets/scripts/album-history.js"></script>
+    <script src="../src/assets/scripts/album-shortcuts.js"></script>
+    <script src="../src/assets/scripts/album-alignment.js"></script>
+    <script src="../src/assets/scripts/album-shapes.js"></script>
+    <script src="../src/assets/scripts/album-filters.js"></script>
+    <script src="../src/assets/scripts/album-drawing.js"></script>
+    <script src="../src/assets/scripts/album-background.js"></script>
+    <script src="../src/assets/scripts/album-advanced.js"></script>
+    <script src="../src/assets/scripts/album.js"></script>
+    <script src="../src/assets/scripts/album-shortcuts.js"></script>
+    <script src="../src/assets/scripts/album-alignment.js"></script>
+    <script src="../src/assets/scripts/album-shapes.js"></script>
+    <script src="../src/assets/scripts/album-filters.js"></script>
+    <script src="../src/assets/scripts/album.js"></script>
 </body>
 </html>
