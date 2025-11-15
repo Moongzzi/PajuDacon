@@ -135,13 +135,17 @@ function setupContentSelector() {
                 // 텍스트 내용 업데이트
                 heroTitle.innerHTML = data.title;
                 heroSubtitle.textContent = data.subtitle;
-                heroButton.textContent = data.buttonText;
-                heroButton.setAttribute('data-link', data.link);
+                if (heroButton) {
+                    heroButton.setAttribute('data-link', data.link);
+                    heroButton.textContent = data.buttonText;
+                }
                 
                 // 페이드 인 효과
                 heroTitle.style.opacity = '1';
                 heroSubtitle.style.opacity = '1';
-                heroButton.style.opacity = '1';
+                if (heroButton) {
+                    heroButton.style.opacity = '1';
+                }
             }, 250);
         }
     }
@@ -170,9 +174,9 @@ function setupContentSelector() {
         // 나머지 카드들 위치 설정
         otherCards.forEach(function(card, index) {
             card.style.zIndex = String(3 - index);
-            var offsetX = -4.17 * (index + 1); // -80px을 vw로 변환
-            var offsetY = 1.87 * (index + 1); // 20px을 vh로 변환
-            card.style.transform = 'translateX(' + offsetX + 'vw) translateY(' + offsetY + 'vh)';
+            var offsetX = 6 * (index + 1);
+            var scale = Math.max(0.85, 0.95 - index * 0.04);
+            card.style.transform = 'translateX(' + offsetX + 'vw) translateY(0) scale(' + scale + ')';
         });
     }
     

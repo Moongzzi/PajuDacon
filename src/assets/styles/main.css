@@ -3,7 +3,7 @@
 /* 히어로 섹션 */
 .hero-section {
     position: relative;
-    height: 100vh;
+    min-height: 100vh;
     /* 폴백 배경 (이미지 로딩 실패 시) */
     background: linear-gradient(135deg, #8B7355 0%, #A0956B 50%, #B8A882 100%);
     /* 메인 배경 이미지 */
@@ -15,6 +15,87 @@
     display: flex;
     align-items: center;
     padding: 0;
+}
+
+/* 홈 화면은 네비게이션 바로 아래에서 시작해 하단까지 꽉 차도록 조정 */
+body.home-page .main-content {
+    margin-top: 0;
+}
+
+body.home-page .hero-section {
+    min-height: 100vh;
+    padding-top: 7.5vh;
+    align-items: center;
+    background: #FFFCEE;
+    background-image: url('../images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    overflow: hidden;
+}
+
+body.home-page .hero-section::before {
+    display: none;
+}
+
+body.home-page .hero-overlay {
+    width: 50%;
+    z-index: 1;
+}
+
+body.home-page .hero-container {
+    position: relative;
+    z-index: 2;
+    max-width: 88vw;
+    height: calc(100vh - 7.5vh);
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4vw;
+    gap: 0;
+}
+
+body.home-page .hero-content {
+    flex: 0 0 50%;
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    padding-right: 2vw;
+}
+
+body.home-page .content-images {
+    flex: 0 0 50%;
+    max-width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 0;
+    position: relative;
+    overflow: visible;
+}
+
+body.home-page .content-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: auto;
+    width: fit-content;
+    height: 100%;
+    max-width: none;
+    min-width: 0;
+    border-radius: 0;
+    z-index: 1;
+}
+
+body.home-page .content-card .content-image,
+body.home-page .content-card:hover .content-image,
+body.home-page .content-card.active .content-image {
+    transition: none;
+    transform: none !important;
+    object-fit: cover;
 }
 
 /* 히어로 컨테이너 */
@@ -99,6 +180,8 @@
     z-index: 10 !important;
     transform: translateX(0) translateY(0) scale(1.02) !important;
     box-shadow: 0 1.87vh 3.75vh rgba(0, 0, 0, 0.4);
+    width: fit-content;
+    display: inline-block;
 }
 
 /* 비활성 카드 */
@@ -112,48 +195,12 @@
     transform: translateY(-0.47vh);
 }
 
-/* 카드 헤더 */
-.card-header {
-    padding: 2.34vh 2.34vh 1.4vh;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(0.94vh);
-}
-
-.card-number {
-    display: inline-block;
-    font-size: 2.25rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 0.75vh;
-}
-
-.card-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #333;
-    margin: 0;
-    line-height: 1.4;
-}
-
-/* 카드 이미지 */
-.card-image {
-    height: calc(100% - 7.5vh);
-    overflow: hidden;
-}
-
 .content-image {
-    width: 100%;
+    width: auto;
     height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.content-card:hover .content-image {
-    transform: scale(1.05);
-}
-
-.content-card.active .content-image {
-    transform: scale(1.02);
+    display: block;
+    object-fit: contain;
+    transition: none;
 }
 
 /* CTA 버튼 */
@@ -161,7 +208,8 @@
     background-color: rgba(255, 255, 255, 0.9);
     color: #333;
     border: none;
-    padding: 1.4vh 1.56vw;
+    padding: 1.2vh 0;
+    width: 11.5rem;
     font-size: 1rem;
     font-weight: bold;
     border-radius: 2.34vh;
@@ -169,7 +217,8 @@
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
-    gap: 0.52vw;
+    justify-content: center;
+    text-align: center;
 }
 
 .cta-button:hover {
@@ -501,23 +550,6 @@
         margin: 0;
     }
     
-    .card-header {
-        padding: 1.87vh 2.6vw 1.12vh;
-    }
-    
-    .card-number {
-        font-size: 1.75rem;
-        margin-bottom: 0.47vh;
-    }
-    
-    .card-title {
-        font-size: 0.875rem;
-    }
-    
-    .card-image {
-        height: calc(100% - 6.09vh);
-    }
-    
     .page-hero h1 {
         font-size: 2rem;
     }
@@ -547,6 +579,7 @@
     .cta-button {
         padding: 1.12vh 5vw;
         font-size: 0.875rem;
+        gap: 2vw;
     }
     
     .content-images {
@@ -557,21 +590,5 @@
     .content-card {
         width: 45.83vw;
         height: 24.37vh;
-    }
-    
-    .card-header {
-        padding: 1.4vh 3.125vw 0.94vh;
-    }
-    
-    .card-number {
-        font-size: 1.5rem;
-    }
-    
-    .card-title {
-        font-size: 0.75rem;
-    }
-    
-    .card-image {
-        height: calc(100% - 5.16vh);
     }
 }
