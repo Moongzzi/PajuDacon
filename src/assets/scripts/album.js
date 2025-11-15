@@ -56,17 +56,7 @@ class AlbumEditor {
             createBtn.addEventListener('click', () => this.openEditor());
         }
         
-        // 뒤로가기 버튼
-        const backBtn = document.getElementById('backBtn');
-        if (backBtn) {
-            backBtn.addEventListener('click', () => this.closeEditor());
-        }
-        
-        // 저장 버튼
-        const saveBtn = document.getElementById('saveBtn');
-        if (saveBtn) {
-            saveBtn.addEventListener('click', () => this.saveAlbum());
-        }
+        // 모달 닫기 버튼 제거됨 - ESC 키로만 닫기 가능
         
         // 우측 사이드바 탭 전환
         const tabButtons = document.querySelectorAll('.tab-btn');
@@ -84,29 +74,12 @@ class AlbumEditor {
                 const type = e.currentTarget.getAttribute('data-type');
                 if (type) {
                     this.handleElementAdd(type);
+                    // 우측 사이드바 토글 처리
+                    this.handleRightSidebarToggle(type);
                 }
             });
         });
-        
-        // 도형 패널 토글
-        const shapesToggleBtn = document.getElementById('shapesToggleBtn');
-        const shapesPanel = document.getElementById('shapesPanel');
-        const backFromShapes = document.getElementById('backFromShapes');
-        const elementCategory = document.querySelector('.element-category');
-        
-        if (shapesToggleBtn && shapesPanel && elementCategory) {
-            shapesToggleBtn.addEventListener('click', () => {
-                elementCategory.style.display = 'none';
-                shapesPanel.style.display = 'block';
-            });
-        }
-        
-        if (backFromShapes && shapesPanel && elementCategory) {
-            backFromShapes.addEventListener('click', () => {
-                shapesPanel.style.display = 'none';
-                elementCategory.style.display = 'grid';
-            });
-        }
+
         
         // ESC 키로 모달 닫기
         document.addEventListener('keydown', (e) => {
@@ -1011,12 +984,7 @@ class AlbumEditor {
             drawingModeBtn.addEventListener('click', () => {
                 const isActive = this.drawingManager.toggleDrawingMode();
                 drawingModeBtn.classList.toggle('active', isActive);
-                // 하단 패널 업데이트
-                if (isActive) {
-                    this.resetControlPanel();
-                } else {
-                    this.resetControlPanel();
-                }
+                // 하단 패널 제거됨
             });
         }
         
@@ -1322,8 +1290,12 @@ class AlbumEditor {
         const selectedObject = event.selected[0];
         console.log('AlbumEditor: Object selected', selectedObject.type);
         
-        // 하단 컨트롤 패널 업데이트 (Task 6에서 구현)
-        this.updateControlPanel(selectedObject);
+        // 이미지 객체 선택 시 우측 사이드바 효과 탭 표시
+        if (selectedObject.type === 'image') {
+            this.handleRightSidebarToggle('image');
+        }
+        
+        // 하단 컨트롤 패널 제거됨
     }
     
     /**
@@ -1332,78 +1304,12 @@ class AlbumEditor {
     onObjectDeselected() {
         console.log('AlbumEditor: Object deselected');
         
-        // 하단 컨트롤 패널 초기화
-        this.resetControlPanel();
+        // 하단 패널 제거됨
     }
     
-    /**
-     * 컨트롤 패널 업데이트
-     */
-    updateControlPanel(object) {
-        const controlPanel = document.getElementById('controlPanel');
-        controlPanel.innerHTML = '';
-        
-        if (object.type === 'i-text' || object.type === 'text' || object.type === 'textbox') {
-            // 텍스트 컨트롤
-            controlPanel.innerHTML = this.createTextControls(object);
-            this.bindTextControlEvents(object);
-        } else if (object.type === 'image') {
-            // 이미지 컨트롤
-            controlPanel.innerHTML = this.createImageControls(object);
-            this.bindImageControlEvents(object);
-        } else {
-            // 기본 컨트롤
-            controlPanel.innerHTML = this.createBasicControls(object);
-            this.bindBasicControlEvents(object);
-        }
-    }
+    // 컨트롤 패널 관련 함수들 제거됨 (하단 패널 제거로 인해 불필요)
     
-    /**
-     * 텍스트 컨트롤 생성 (간소화 버전 - 하단 패널용)
-     */
-    createTextControls(object) {
-        return `
-            <div class="control-group">
-                <label class="control-label">크기</label>
-                <input type="number" class="control-input" id="fontSizeInput" 
-                       value="${Math.round(object.fontSize)}" min="10" max="200" step="1">
-            </div>
-            <div class="control-group">
-                <label class="control-label">폰트</label>
-                <select class="control-input" id="fontFamilyInput">
-                    <option value="Malgun Gothic">맑은 고딕</option>
-                    <option value="Arial">Arial</option>
-                    <option value="Times New Roman">Times</option>
-                    <option value="Georgia">Georgia</option>
-                </select>
-            </div>
-            <div class="control-group">
-                <label class="control-label">색상</label>
-                <input type="color" class="control-input" id="textColorInput" 
-                       value="${this.rgbToHex(object.fill)}">
-            </div>
-            <div class="control-group">
-                <label class="control-label">굵기</label>
-                <select class="control-input" id="fontWeightInput" style="width: 80px;">
-                    <option value="normal" ${object.fontWeight === 'normal' ? 'selected' : ''}>보통</option>
-                    <option value="bold" ${object.fontWeight === 'bold' ? 'selected' : ''}>굵게</option>
-                </select>
-            </div>
-            <div class="control-group">
-                <label class="control-label">정렬</label>
-                <select class="control-input" id="textAlignInput" style="width: 90px;">
-                    <option value="left" ${object.textAlign === 'left' ? 'selected' : ''}>왼쪽</option>
-                    <option value="center" ${object.textAlign === 'center' ? 'selected' : ''}>중앙</option>
-                    <option value="right" ${object.textAlign === 'right' ? 'selected' : ''}>오른쪽</option>
-                </select>
-            </div>
-            <div class="control-group">
-                <button class="control-btn delete-btn" id="deleteObjectBtn">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </div>
-        `;
-    }
+
     
     /**
      * 이미지 컨트롤 생성
@@ -1827,7 +1733,7 @@ class AlbumEditor {
     }
     
     /**
-     * 앨범 불러오기
+     * 앨범 불러기
      */
     loadAlbum(albumId) {
         console.log('AlbumEditor: Loading album...', albumId);
@@ -1845,6 +1751,51 @@ class AlbumEditor {
                 };
                 console.log('AlbumEditor: Album loaded successfully');
             });
+        }
+    }
+
+    /**
+     * 우측 사이드바 토글 처리
+     */
+    handleRightSidebarToggle(type) {
+        const rightSidebar = document.querySelector('.right-sidebar');
+        const layersTab = document.getElementById('layersTab');
+        const effectsTab = document.getElementById('effectsTab');
+        const textTab = document.getElementById('textTab');
+        const stickerTab = document.getElementById('stickerTab');
+        const shapesTab = document.getElementById('shapesTab');
+        const drawingTab = document.getElementById('drawingTab');
+        
+        if (!rightSidebar) return;
+        
+        // 모든 탭 비활성화
+        const allTabs = [layersTab, effectsTab, textTab, stickerTab, shapesTab, drawingTab];
+        allTabs.forEach(tab => {
+            if (tab) tab.classList.remove('active');
+        });
+        
+        // 버튼 타입에 따라 처리
+        switch(type) {
+            case 'layers':
+                if (layersTab) layersTab.classList.add('active');
+                break;
+            case 'image':
+                if (effectsTab) effectsTab.classList.add('active');
+                break;
+            case 'text':
+                if (textTab) textTab.classList.add('active');
+                break;
+            case 'sticker':
+                if (stickerTab) stickerTab.classList.add('active');
+                break;
+            case 'shapes':
+                if (shapesTab) shapesTab.classList.add('active');
+                break;
+            case 'drawing':
+                if (drawingTab) drawingTab.classList.add('active');
+                break;
+            default:
+                if (layersTab) layersTab.classList.add('active');
         }
     }
 }

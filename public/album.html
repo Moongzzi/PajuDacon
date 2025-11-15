@@ -7,6 +7,30 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- S-Core Dream 폰트 추가 -->
+    <link href="https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT.css" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: 'S-Core Dream';
+            font-weight: 300;
+            src: url('https://cdn.jsdelivr.net/gh/fontist/S-CoreDream/S-CoreDream-3Light.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'S-Core Dream';
+            font-weight: 400;
+            src: url('https://cdn.jsdelivr.net/gh/fontist/S-CoreDream/S-CoreDream-4Regular.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'S-Core Dream';
+            font-weight: 500;
+            src: url('https://cdn.jsdelivr.net/gh/fontist/S-CoreDream/S-CoreDream-5Medium.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'S-Core Dream';
+            font-weight: 600;
+            src: url('https://cdn.jsdelivr.net/gh/fontist/S-CoreDream/S-CoreDream-6Bold.woff2') format('woff2');
+        }
+    </style>
     <link rel="stylesheet" href="../src/assets/styles/reset.css">
     <link rel="stylesheet" href="../src/assets/styles/common.css">
     <link rel="stylesheet" href="../src/assets/styles/utilities.css">
@@ -62,35 +86,25 @@
     <!-- Album Editor Modal -->
     <div id="albumEditorModal" class="album-modal">
         <div class="album-modal-content">
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <button class="back-btn" id="backBtn">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>뒤로가기</span>
-                </button>
-                <div class="header-center">
-                    <input type="text" class="modal-title-input" id="albumTitle" value="앨범 만들기" placeholder="앨범 제목을 입력하세요">
-                </div>
-                <div class="header-right">
-                    <button class="history-btn" id="undoBtn" title="실행 취소 (Ctrl+Z)">
-                        <i class="fas fa-undo"></i>
-                    </button>
-                    <button class="history-btn" id="redoBtn" title="다시 실행 (Ctrl+Y)">
-                        <i class="fas fa-redo"></i>
-                    </button>
-                    <button class="save-btn" id="saveBtn">
-                        <i class="fas fa-save"></i>
-                        <span>저장</span>
-                    </button>
-                </div>
-            </div>
-
             <!-- Main Editor Area -->
             <div class="editor-container">
                 <!-- Left Sidebar - Elements Panel -->
                 <aside class="left-sidebar">
                     <div class="sidebar-header">
-                        <h3>요소 추가</h3>
+                        <div class="title-section">
+                            <input type="text" class="modal-title-input" id="albumTitle" value="앨범 만들기" placeholder="앨범 제목을 입력하세요">
+                        </div>
+                        <div class="sidebar-header-content">
+                            <h3>요소 추가하기</h3>
+                            <div class="history-controls">
+                                <button class="history-btn" id="undoBtn" title="실행 취소 (Ctrl+Z)">
+                                    <i class="fas fa-undo"></i>
+                                </button>
+                                <button class="history-btn" id="redoBtn" title="다시 실행 (Ctrl+Y)">
+                                    <i class="fas fa-redo"></i>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                     <div class="sidebar-content">
                         <div class="element-category">
@@ -106,106 +120,23 @@
                                 <i class="fas fa-icons"></i>
                                 <span>스티커</span>
                             </button>
-                            <button class="element-btn" id="shapesToggleBtn">
+                            <button class="element-btn" id="shapesToggleBtn" data-type="shapes">
                                 <i class="fas fa-shapes"></i>
                                 <span>도형</span>
                             </button>
-                            <button class="element-btn" id="drawingModeBtn">
+                            <button class="element-btn" id="drawingModeBtn" data-type="drawing">
                                 <i class="fas fa-pen"></i>
                                 <span>그리기</span>
                             </button>
+                            <button class="element-btn" id="layersBtn" data-type="layers">
+                                <i class="fas fa-layer-group"></i>
+                                <span>레이어</span>
+                            </button>
                         </div>
                         
-                        <!-- 도형 선택 패널 (접기/펼치기) -->
-                        <div class="shapes-panel" id="shapesPanel" style="display: none;">
-                            <div class="panel-header-small">
-                                <button class="back-to-elements" id="backFromShapes">
-                                    <i class="fas fa-arrow-left"></i>
-                                </button>
-                                <h4>도형 선택</h4>
-                            </div>
-                            <div class="shape-grid">
-                                <button class="shape-btn" data-shape="rectangle">
-                                    <i class="fas fa-square"></i>
-                                    <span>사각형</span>
-                                </button>
-                                <button class="shape-btn" data-shape="circle">
-                                    <i class="fas fa-circle"></i>
-                                    <span>원</span>
-                                </button>
-                                <button class="shape-btn" data-shape="triangle">
-                                    <i class="fas fa-play" style="transform: rotate(-90deg);"></i>
-                                    <span>삼각형</span>
-                                </button>
-                                <button class="shape-btn" data-shape="star">
-                                    <i class="fas fa-star"></i>
-                                    <span>별</span>
-                                </button>
-                                <button class="shape-btn" data-shape="heart">
-                                    <i class="fas fa-heart"></i>
-                                    <span>하트</span>
-                                </button>
-                                <button class="shape-btn" data-shape="line">
-                                    <i class="fas fa-minus"></i>
-                                    <span>선</span>
-                                </button>
-                                <button class="shape-btn" data-shape="arrow">
-                                    <i class="fas fa-arrow-right"></i>
-                                    <span>화살표</span>
-                                </button>
-                            </div>
-                        </div>
+
                         
-                        <!-- Sticker Panel (hidden by default) -->
-                        <div class="sticker-panel" id="stickerPanel" style="display: none;">
-                            <div class="sticker-header">
-                                <button class="back-to-elements" id="backToElements">
-                                    <i class="fas fa-arrow-left"></i>
-                                    <span>뒤로</span>
-                                </button>
-                                <h4>스티커 선택</h4>
-                            </div>
-                            <div class="sticker-grid">
-                                <!-- Emoji Icons -->
-                                <div class="sticker-item" data-icon="😊">😊</div>
-                                <div class="sticker-item" data-icon="❤️">❤️</div>
-                                <div class="sticker-item" data-icon="⭐">⭐</div>
-                                <div class="sticker-item" data-icon="🎉">🎉</div>
-                                <div class="sticker-item" data-icon="📷">📷</div>
-                                <div class="sticker-item" data-icon="📚">📚</div>
-                                <div class="sticker-item" data-icon="✨">✨</div>
-                                <div class="sticker-item" data-icon="🌟">🌟</div>
-                                <div class="sticker-item" data-icon="💖">💖</div>
-                                <div class="sticker-item" data-icon="🎈">🎈</div>
-                                <div class="sticker-item" data-icon="🌈">🌈</div>
-                                <div class="sticker-item" data-icon="🎨">🎨</div>
-                                <!-- Font Awesome Icons -->
-                                <div class="sticker-item" data-icon="heart">
-                                    <i class="fas fa-heart"></i>
-                                </div>
-                                <div class="sticker-item" data-icon="star">
-                                    <i class="fas fa-star"></i>
-                                </div>
-                                <div class="sticker-item" data-icon="bookmark">
-                                    <i class="fas fa-bookmark"></i>
-                                </div>
-                                <div class="sticker-item" data-icon="camera">
-                                    <i class="fas fa-camera"></i>
-                                </div>
-                                <div class="sticker-item" data-icon="book">
-                                    <i class="fas fa-book"></i>
-                                </div>
-                                <div class="sticker-item" data-icon="leaf">
-                                    <i class="fas fa-leaf"></i>
-                                </div>
-                                <div class="sticker-item" data-icon="sun">
-                                    <i class="fas fa-sun"></i>
-                                </div>
-                                <div class="sticker-item" data-icon="moon">
-                                    <i class="fas fa-moon"></i>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </aside>
 
@@ -218,24 +149,7 @@
 
                 <!-- Right Sidebar - Advanced Tools -->
                 <aside class="right-sidebar">
-                    <div class="sidebar-tabs">
-                        <button class="tab-btn active" data-tab="layers">
-                            <i class="fas fa-layer-group"></i>
-                            <span>레이어</span>
-                        </button>
-                        <button class="tab-btn" data-tab="effects">
-                            <i class="fas fa-magic"></i>
-                            <span>효과</span>
-                        </button>
-                        <button class="tab-btn" data-tab="align">
-                            <i class="fas fa-align-center"></i>
-                            <span>정렬</span>
-                        </button>
-                        <button class="tab-btn" data-tab="tools">
-                            <i class="fas fa-tools"></i>
-                            <span>도구</span>
-                        </button>
-                    </div>
+                    <!-- 탭 버튼들 제거 -->
                     
                     <div class="tab-content">
                         <!-- Layers Tab -->
@@ -268,6 +182,17 @@
                                 <h3>이미지 효과</h3>
                             </div>
                             <div class="effects-content">
+                                <!-- 불투명도 섹션 -->
+                                <div class="effect-section">
+                                    <div class="effect-section-title">불투명도</div>
+                                    <div class="opacity-controls">
+                                        <div class="control-group">
+                                            <label class="control-label">투명도</label>
+                                            <input type="range" id="opacityRange" class="range-input" min="0" max="100" value="100">
+                                            <span class="control-value" id="opacityValue">100%</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- 필터 섹션 -->
                                 <div class="effect-section">
                                     <div class="effect-section-title">이미지 필터</div>
@@ -351,192 +276,337 @@
                             </div>
                         </div>
                         
-                        <!-- Align Tab -->
-                        <div class="tab-panel" id="alignTab">
+                        <!-- Text Tab -->
+                        <div class="tab-panel" id="textTab">
                             <div class="panel-header">
-                                <h3>정렬 및 배치</h3>
+                                <h3>텍스트 옵션</h3>
                             </div>
-                            <div class="align-content">
-                                <div class="align-section">
-                                    <h4 class="align-section-title">정렬</h4>
-                                    <div class="align-buttons">
-                                        <button class="align-btn" id="alignLeft" title="왼쪽 정렬">
+                            <div class="text-content">
+                                <!-- 폰트 선택 섹션 -->
+                                <div class="text-section">
+                                    <div class="text-section-title">폰트</div>
+                                    <div class="font-controls">
+                                        <select id="fontFamily" class="font-select">
+                                            <option value="Arial">Arial</option>
+                                            <option value="Helvetica">Helvetica</option>
+                                            <option value="Georgia">Georgia</option>
+                                            <option value="Times New Roman">Times New Roman</option>
+                                            <option value="S-Core Dream">'S-Core Dream'</option>
+                                            <option value="Noto Sans">Noto Sans</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- 텍스트 크기 및 스타일 섹션 -->
+                                <div class="text-section">
+                                    <div class="text-section-title">크기 및 스타일</div>
+                                    <div class="text-size-controls">
+                                        <div class="control-group">
+                                            <label class="control-label">크기</label>
+                                            <input type="range" id="fontSize" class="range-input" min="8" max="120" value="16">
+                                            <span class="control-value" id="fontSizeValue">16px</span>
+                                        </div>
+                                        <div class="text-style-buttons">
+                                            <button class="text-style-btn" id="boldBtn" data-style="bold">
+                                                <i class="fas fa-bold"></i>
+                                            </button>
+                                            <button class="text-style-btn" id="italicBtn" data-style="italic">
+                                                <i class="fas fa-italic"></i>
+                                            </button>
+                                            <button class="text-style-btn" id="underlineBtn" data-style="underline">
+                                                <i class="fas fa-underline"></i>
+                                            </button>
+                                            <button class="text-style-btn" id="strikethroughBtn" data-style="strikethrough">
+                                                <i class="fas fa-strikethrough"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 텍스트 색상 섹션 -->
+                                <div class="text-section">
+                                    <div class="text-section-title">색상</div>
+                                    <div class="color-controls">
+                                        <input type="color" id="textColor" class="color-input" value="#000000">
+                                    </div>
+                                </div>
+
+                                <!-- 텍스트 정렬 섹션 -->
+                                <div class="text-section">
+                                    <div class="text-section-title">정렬</div>
+                                    <div class="text-align-buttons">
+                                        <button class="text-align-btn" id="alignLeftBtn" data-align="left">
                                             <i class="fas fa-align-left"></i>
-                                            <span>왼쪽</span>
                                         </button>
-                                        <button class="align-btn" id="alignCenter" title="가로 중앙">
+                                        <button class="text-align-btn" id="alignCenterBtn" data-align="center">
                                             <i class="fas fa-align-center"></i>
-                                            <span>중앙</span>
                                         </button>
-                                        <button class="align-btn" id="alignRight" title="오른쪽 정렬">
+                                        <button class="text-align-btn" id="alignRightBtn" data-align="right">
                                             <i class="fas fa-align-right"></i>
-                                            <span>오른쪽</span>
                                         </button>
-                                        <button class="align-btn" id="alignTop" title="위쪽 정렬">
-                                            <i class="fas fa-arrow-up"></i>
-                                            <span>위</span>
-                                        </button>
-                                        <button class="align-btn" id="alignMiddle" title="세로 중앙">
-                                            <i class="fas fa-arrows-alt-v"></i>
-                                            <span>중간</span>
-                                        </button>
-                                        <button class="align-btn" id="alignBottom" title="아래쪽 정렬">
-                                            <i class="fas fa-arrow-down"></i>
-                                            <span>아래</span>
+                                        <button class="text-align-btn" id="alignJustifyBtn" data-align="justify">
+                                            <i class="fas fa-align-justify"></i>
                                         </button>
                                     </div>
                                 </div>
-                                <div class="align-section">
-                                    <h4 class="align-section-title">분배</h4>
-                                    <div class="align-buttons">
-                                        <button class="align-btn" id="distributeHorizontal" title="가로 균등 분배">
-                                            <i class="fas fa-arrows-alt-h"></i>
-                                            <span>가로 분배</span>
+
+                                <!-- 행간 및 자간 섹션 -->
+                                <div class="text-section">
+                                    <div class="text-section-title">간격</div>
+                                    <div class="spacing-controls">
+                                        <div class="control-group">
+                                            <label class="control-label">행간</label>
+                                            <input type="range" id="lineHeight" class="range-input" min="0.5" max="3" step="0.1" value="1.2">
+                                            <span class="control-value" id="lineHeightValue">1.2</span>
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="control-label">자간</label>
+                                            <input type="range" id="letterSpacing" class="range-input" min="-5" max="20" value="0">
+                                            <span class="control-value" id="letterSpacingValue">0px</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Sticker Tab -->
+                        <div class="tab-panel" id="stickerTab">
+                            <div class="panel-header">
+                                <h3>스티커</h3>
+                            </div>
+                            <div class="sticker-content">
+                                <!-- 스티커 카테고리 섹션 -->
+                                <div class="sticker-categories">
+                                    <button class="sticker-category-btn active" data-category="emoji">
+                                        <i class="fas fa-smile"></i>
+                                        이모지
+                                    </button>
+                                    <button class="sticker-category-btn" data-category="nature">
+                                        <i class="fas fa-leaf"></i>
+                                        자연
+                                    </button>
+                                    <button class="sticker-category-btn" data-category="objects">
+                                        <i class="fas fa-cube"></i>
+                                        오브젝트
+                                    </button>
+                                    <button class="sticker-category-btn" data-category="symbols">
+                                        <i class="fas fa-star"></i>
+                                        심볼
+                                    </button>
+                                </div>
+
+                                <!-- 스티커 그리드 -->
+                                <div class="sticker-grid" id="stickerGrid">
+                                    <!-- 이모지 스티커들 -->
+                                    <div class="sticker-item" data-category="emoji" data-sticker="😀">😀</div>
+                                    <div class="sticker-item" data-category="emoji" data-sticker="😂">😂</div>
+                                    <div class="sticker-item" data-category="emoji" data-sticker="😍">😍</div>
+                                    <div class="sticker-item" data-category="emoji" data-sticker="🤔">🤔</div>
+                                    <div class="sticker-item" data-category="emoji" data-sticker="😎">😎</div>
+                                    <div class="sticker-item" data-category="emoji" data-sticker="😭">😭</div>
+                                    <div class="sticker-item" data-category="emoji" data-sticker="😡">😡</div>
+                                    <div class="sticker-item" data-category="emoji" data-sticker="🤗">🤗</div>
+                                    
+                                    <!-- 자연 스티커들 -->
+                                    <div class="sticker-item" data-category="nature" data-sticker="🌟" style="display: none;">🌟</div>
+                                    <div class="sticker-item" data-category="nature" data-sticker="⭐" style="display: none;">⭐</div>
+                                    <div class="sticker-item" data-category="nature" data-sticker="🌙" style="display: none;">🌙</div>
+                                    <div class="sticker-item" data-category="nature" data-sticker="☀️" style="display: none;">☀️</div>
+                                    <div class="sticker-item" data-category="nature" data-sticker="🌈" style="display: none;">🌈</div>
+                                    <div class="sticker-item" data-category="nature" data-sticker="⚡" style="display: none;">⚡</div>
+                                    <div class="sticker-item" data-category="nature" data-sticker="❄️" style="display: none;">❄️</div>
+                                    <div class="sticker-item" data-category="nature" data-sticker="🔥" style="display: none;">🔥</div>
+                                    
+                                    <!-- 오브젝트 스티커들 -->
+                                    <div class="sticker-item" data-category="objects" data-sticker="❤️" style="display: none;">❤️</div>
+                                    <div class="sticker-item" data-category="objects" data-sticker="💛" style="display: none;">💛</div>
+                                    <div class="sticker-item" data-category="objects" data-sticker="💚" style="display: none;">💚</div>
+                                    <div class="sticker-item" data-category="objects" data-sticker="💙" style="display: none;">💙</div>
+                                    <div class="sticker-item" data-category="objects" data-sticker="💜" style="display: none;">💜</div>
+                                    <div class="sticker-item" data-category="objects" data-sticker="🖤" style="display: none;">🖤</div>
+                                    <div class="sticker-item" data-category="objects" data-sticker="💖" style="display: none;">💖</div>
+                                    <div class="sticker-item" data-category="objects" data-sticker="💕" style="display: none;">💕</div>
+                                    
+                                    <!-- 심볼 스티커들 -->
+                                    <div class="sticker-item" data-category="symbols" data-sticker="✨" style="display: none;">✨</div>
+                                    <div class="sticker-item" data-category="symbols" data-sticker="💫" style="display: none;">💫</div>
+                                    <div class="sticker-item" data-category="symbols" data-sticker="⭐" style="display: none;">⭐</div>
+                                    <div class="sticker-item" data-category="symbols" data-sticker="🎉" style="display: none;">🎉</div>
+                                    <div class="sticker-item" data-category="symbols" data-sticker="🎊" style="display: none;">🎊</div>
+                                    <div class="sticker-item" data-category="symbols" data-sticker="🔮" style="display: none;">🔮</div>
+                                    <div class="sticker-item" data-category="symbols" data-sticker="💎" style="display: none;">💎</div>
+                                    <div class="sticker-item" data-category="symbols" data-sticker="🏆" style="display: none;">🏆</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Shapes Tab -->
+                        <div class="tab-panel" id="shapesTab">
+                            <div class="panel-header">
+                                <h3>도형</h3>
+                            </div>
+                            <div class="shapes-content">
+                                <!-- 기본 도형 섹션 -->
+                                <div class="shapes-section">
+                                    <div class="shapes-section-title">기본 도형</div>
+                                    <div class="shapes-grid">
+                                        <button class="shape-btn" data-shape="rectangle">
+                                            <i class="fas fa-square"></i>
+                                            <span>사각형</span>
                                         </button>
-                                        <button class="align-btn" id="distributeVertical" title="세로 균등 분배">
-                                            <i class="fas fa-arrows-alt-v"></i>
-                                            <span>세로 분배</span>
+                                        <button class="shape-btn" data-shape="circle">
+                                            <i class="fas fa-circle"></i>
+                                            <span>원</span>
+                                        </button>
+                                        <button class="shape-btn" data-shape="triangle">
+                                            <i class="fas fa-play"></i>
+                                            <span>삼각형</span>
+                                        </button>
+                                        <button class="shape-btn" data-shape="ellipse">
+                                            <i class="fas fa-circle"></i>
+                                            <span>타원</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- 선 도형 섹션 -->
+                                <div class="shapes-section">
+                                    <div class="shapes-section-title">선 도형</div>
+                                    <div class="shapes-grid">
+                                        <button class="shape-btn" data-shape="line">
+                                            <i class="fas fa-minus"></i>
+                                            <span>직선</span>
+                                        </button>
+                                        <button class="shape-btn" data-shape="arrow">
+                                            <i class="fas fa-arrow-right"></i>
+                                            <span>화살표</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- 도형 속성 섹션 -->
+                                <div class="shapes-section">
+                                    <div class="shapes-section-title">도형 속성</div>
+                                    <div class="shape-properties">
+                                        <!-- 채우기 색상 -->
+                                        <div class="property-group">
+                                            <label class="property-label">채우기 색상</label>
+                                            <div class="color-picker-group">
+                                                <input type="color" id="shapeFillColor" class="color-input" value="#3498db">
+                                                <button class="transparent-btn" id="noFillBtn">투명</button>
+                                            </div>
+                                        </div>
+
+                                        <!-- 테두리 색상 -->
+                                        <div class="property-group">
+                                            <label class="property-label">테두리 색상</label>
+                                            <input type="color" id="shapeStrokeColor" class="color-input" value="#2c3e50">
+                                        </div>
+
+                                        <!-- 테두리 두께 -->
+                                        <div class="property-group">
+                                            <label class="property-label">테두리 두께</label>
+                                            <input type="range" id="shapeStrokeWidth" class="range-input" min="0" max="20" value="2">
+                                            <span class="control-value" id="strokeWidthValue">2px</span>
+                                        </div>
+
+                                        <!-- 투명도 -->
+                                        <div class="property-group">
+                                            <label class="property-label">투명도</label>
+                                            <input type="range" id="shapeOpacity" class="range-input" min="0" max="100" value="100">
+                                            <span class="control-value" id="shapeOpacityValue">100%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Drawing Tab -->
+                        <div class="tab-panel" id="drawingTab">
+                            <div class="panel-header">
+                                <h3>그리기</h3>
+                            </div>
+                            <div class="drawing-content">
+                                <!-- 도구 선택 섹션 -->
+                                <div class="drawing-section">
+                                    <div class="drawing-section-title">도구</div>
+                                    <div class="drawing-tools">
+                                        <button class="drawing-tool-btn active" id="brushBtn" data-tool="brush">
+                                            <i class="fas fa-paint-brush"></i>
+                                            <span>브러시</span>
+                                        </button>
+                                        <button class="drawing-tool-btn" id="eraserBtn" data-tool="eraser">
+                                            <i class="fas fa-eraser"></i>
+                                            <span>지우개</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- 브러시 설정 섹션 -->
+                                <div class="drawing-section">
+                                    <div class="drawing-section-title">브러시 설정</div>
+                                    <div class="brush-settings">
+                                        <!-- 브러시 크기 -->
+                                        <div class="drawing-control-group">
+                                            <label class="drawing-control-label">크기</label>
+                                            <input type="range" id="brushSize" class="range-input" min="1" max="50" value="5">
+                                            <span class="control-value" id="brushSizeValue">5px</span>
+                                        </div>
+
+                                        <!-- 브러시 색상 -->
+                                        <div class="drawing-control-group">
+                                            <label class="drawing-control-label">색상</label>
+                                            <input type="color" id="brushColor" class="color-input" value="#000000">
+                                        </div>
+
+                                        <!-- 브러시 투명도 -->
+                                        <div class="drawing-control-group">
+                                            <label class="drawing-control-label">투명도</label>
+                                            <input type="range" id="brushOpacity" class="range-input" min="0" max="100" value="100">
+                                            <span class="control-value" id="brushOpacityValue">100%</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 브러시 타입 섹션 -->
+                                <div class="drawing-section">
+                                    <div class="drawing-section-title">브러시 타입</div>
+                                    <div class="brush-types">
+                                        <button class="brush-type-btn active" data-type="round">
+                                            <div class="brush-preview round"></div>
+                                            <span>원형</span>
+                                        </button>
+                                        <button class="brush-type-btn" data-type="square">
+                                            <div class="brush-preview square"></div>
+                                            <span>사각형</span>
+                                        </button>
+                                        <button class="brush-type-btn" data-type="soft">
+                                            <div class="brush-preview soft"></div>
+                                            <span>부드러운</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- 그리기 액션 섹션 -->
+                                <div class="drawing-section">
+                                    <div class="drawing-section-title">액션</div>
+                                    <div class="drawing-actions">
+                                        <button class="drawing-action-btn" id="clearDrawingBtn">
+                                            <i class="fas fa-trash"></i>
+                                            <span>모두 지우기</span>
+                                        </button>
+                                        <button class="drawing-action-btn" id="undoDrawingBtn">
+                                            <i class="fas fa-undo"></i>
+                                            <span>실행 취소</span>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Tools Tab (Drawing & Background) -->
-                        <div class="tab-panel" id="toolsTab">
-                            <div class="panel-header">
-                                <h3>도구</h3>
-                            </div>
-                            <div class="tools-content">
-                                <!-- 그리기 도구 -->
-                                <div class="tool-section">
-                                    <div class="tool-section-title">그리기 도구</div>
-                                    <div class="drawing-controls">
-                                        <div class="control-group">
-                                            <label class="control-label">브러시 색상</label>
-                                            <input type="color" id="brushColor" class="color-input" value="#000000">
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label">브러시 굵기</label>
-                                            <input type="range" id="brushWidth" class="range-input" min="1" max="50" value="5">
-                                            <span class="control-value" id="brushWidthValue">5px</span>
-                                        </div>
-                                        <div class="drawing-buttons">
-                                            <button class="tool-btn" id="penModeBtn">
-                                                <i class="fas fa-pen"></i>
-                                                <span>펜</span>
-                                            </button>
-                                            <button class="tool-btn" id="eraserModeBtn">
-                                                <i class="fas fa-eraser"></i>
-                                                <span>지우개</span>
-                                            </button>
-                                            <button class="tool-btn danger" id="clearDrawingsBtn">
-                                                <i class="fas fa-trash"></i>
-                                                <span>모두 지우기</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- 배경 설정 -->
-                                <div class="tool-section">
-                                    <div class="tool-section-title">배경 설정</div>
-                                    <div class="background-controls">
-                                        <div class="control-group">
-                                            <label class="control-label">배경색</label>
-                                            <input type="color" id="bgColor" class="color-input" value="#FFFFFF">
-                                        </div>
-                                        <div class="bg-presets">
-                                            <button class="bg-preset-btn" data-color="#FFFFFF" style="background: #FFFFFF;"></button>
-                                            <button class="bg-preset-btn" data-color="#F0F0F0" style="background: #F0F0F0;"></button>
-                                            <button class="bg-preset-btn" data-color="#FFE5E5" style="background: #FFE5E5;"></button>
-                                            <button class="bg-preset-btn" data-color="#E5F3FF" style="background: #E5F3FF;"></button>
-                                            <button class="bg-preset-btn" data-color="#FFF9E5" style="background: #FFF9E5;"></button>
-                                            <button class="bg-preset-btn" data-color="#E5FFE5" style="background: #E5FFE5;"></button>
-                                        </div>
-                                        <div class="tool-section-title" style="margin-top: 16px;">그라디언트</div>
-                                        <div class="gradient-buttons">
-                                            <button class="gradient-btn" data-type="linear">
-                                                <div class="gradient-preview linear"></div>
-                                                <span>선형</span>
-                                            </button>
-                                            <button class="gradient-btn" data-type="radial">
-                                                <div class="gradient-preview radial"></div>
-                                                <span>방사형</span>
-                                            </button>
-                                        </div>
-                                        <div class="tool-section-title" style="margin-top: 16px;">패턴</div>
-                                        <div class="pattern-buttons">
-                                            <button class="pattern-btn" data-pattern="dots">점</button>
-                                            <button class="pattern-btn" data-pattern="stripes">줄무늬</button>
-                                            <button class="pattern-btn" data-pattern="grid">격자</button>
-                                            <button class="pattern-btn" data-pattern="diagonal">대각선</button>
-                                        </div>
-                                        <button class="tool-btn full-width" id="resetBgBtn">
-                                            <i class="fas fa-undo"></i>
-                                            <span>배경 초기화</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- 고급 기능 -->
-                                <div class="tool-section">
-                                    <div class="tool-section-title">고급 기능</div>
-                                    <div class="advanced-controls">
-                                        <div class="tool-section-title" style="margin-top: 8px; font-size: 11px;">클리핑 마스크</div>
-                                        <div class="mask-buttons">
-                                            <button class="mask-btn" data-mask="circle">
-                                                <i class="fas fa-circle"></i>
-                                                <span>원형</span>
-                                            </button>
-                                            <button class="mask-btn" data-mask="heart">
-                                                <i class="fas fa-heart"></i>
-                                                <span>하트</span>
-                                            </button>
-                                            <button class="mask-btn" data-mask="star">
-                                                <i class="fas fa-star"></i>
-                                                <span>별</span>
-                                            </button>
-                                            <button class="mask-btn" data-mask="remove">
-                                                <i class="fas fa-times"></i>
-                                                <span>제거</span>
-                                            </button>
-                                        </div>
-                                        <div class="tool-section-title" style="margin-top: 12px; font-size: 11px;">템플릿</div>
-                                        <div class="template-buttons">
-                                            <button class="template-btn" data-template="blank">빈 페이지</button>
-                                            <button class="template-btn" data-template="twoColumn">2단</button>
-                                            <button class="template-btn" data-template="grid">그리드</button>
-                                        </div>
-                                        <div class="tool-section-title" style="margin-top: 12px; font-size: 11px;">페이지</div>
-                                        <div class="page-controls">
-                                            <button class="tool-btn" id="addPageBtn">
-                                                <i class="fas fa-plus"></i>
-                                                <span>페이지 추가</span>
-                                            </button>
-                                            <div class="page-nav" id="pageNav">
-                                                <button class="page-nav-btn" id="prevPageBtn">
-                                                    <i class="fas fa-chevron-left"></i>
-                                                </button>
-                                                <span class="page-indicator" id="pageIndicator">1 / 1</span>
-                                                <button class="page-nav-btn" id="nextPageBtn">
-                                                    <i class="fas fa-chevron-right"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- 정렬, 도구 탭 제거됨 -->
                     </div>
                 </aside>
-            </div>
-
-            <!-- Bottom Control Panel -->
-            <div class="bottom-panel">
-                <div class="control-section" id="controlPanel">
-                    <p class="no-selection">객체를 선택하면 옵션이 표시됩니다</p>
-                </div>
             </div>
         </div>
     </div>
@@ -553,11 +623,6 @@
     <script src="../src/assets/scripts/album-drawing.js"></script>
     <script src="../src/assets/scripts/album-background.js"></script>
     <script src="../src/assets/scripts/album-advanced.js"></script>
-    <script src="../src/assets/scripts/album.js"></script>
-    <script src="../src/assets/scripts/album-shortcuts.js"></script>
-    <script src="../src/assets/scripts/album-alignment.js"></script>
-    <script src="../src/assets/scripts/album-shapes.js"></script>
-    <script src="../src/assets/scripts/album-filters.js"></script>
     <script src="../src/assets/scripts/album.js"></script>
 </body>
 </html>
